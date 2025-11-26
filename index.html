@@ -25,6 +25,8 @@ body{
   margin:0; min-height:100vh; background:var(--bg); color:#0f172a;
   display:flex; align-items:center; justify-content:center; padding:24px;
 }
+<div id="ads-left" class="side-ad">Área de anúncio (esquerda)</div>
+<div id="ads-right" class="side-ad">Área de anúncio (direita)</div>
 .wrapper{width:100%;max-width:920px}
 #ads-top,#ads-bottom{width:100%;max-width:100%;min-height:90px;margin:10px auto;border-radius:8px;border:1px dashed #d1d5db;background:#fff;padding:12px;color:#374151;text-align:center}
 /* Card */
@@ -77,6 +79,33 @@ legend{font-weight:700;padding:0 6px}
 @media(max-width:520px){
   .flags{justify-content:center}
   .header{flex-direction:column;align-items:flex-start}
+}
+  .side-ad {
+  position: fixed;
+  top: 80px;
+  width: 140px;
+  min-height: 300px;
+  background: #fff;
+  border: 1px dashed #d1d5db;
+  border-radius: 8px;
+  padding: 10px;
+  text-align: center;
+  color: #374151;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+  z-index: 999;
+}
+
+#ads-left {
+  left: 10px;
+}
+
+#ads-right {
+  right: 10px;
+}
+
+@media(max-width: 1200px) {
+  /* Esconde anúncios laterais em celular */
+  .side-ad { display:none; }
 }
 </style>
 </head>
@@ -209,13 +238,14 @@ legend{font-weight:700;padding:0 6px}
    - validações
    =========================== */
 document.addEventListener('DOMContentLoaded', () => {
-
   /* ---------- Wordlists (exemplo curto; pode ampliar) ---------- */
+  const wordlists = {
   const wordlist_pt = ["casa","carro","sol","lua","mar","rio","flor","arvore","montanha","estrela","cachorro","gato","livro","caneta","mesa","cadeira","porta","janela","ceu","terra","fogo","agua","vento","chuva","neve","verao","inverno","primavera","outono","amigo","familia","amor","felicidade"];
   const wordlist_en = ["house","car","sun","moon","sea","river","flower","tree","mountain","star","dog","cat","book","pen","table","chair","door","window","sky","earth","fire","water","wind","rain","snow","summer","winter","spring","autumn","friend","family","love","happiness"];
   const wordlist_es = ["casa","coche","sol","luna","mar","rio","flor","arbol","montana","estrella","perro","gato","libro","pluma","mesa","silla","puerta","ventana","cielo","tierra","fuego","agua","viento","lluvia","nieve","verano","invierno","primavera","otonio","amigo","familia","amor","felicidad"];
   const blacklist = ["palavraofensiva1","palavraofensiva2"];
-
+    };
+  let currentLang = "pt";
   /* ---------- Traduções simples ---------- */
   const translations = {
     pt: {
@@ -295,7 +325,14 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     return Math.floor(Math.random() * n);
   }
+document.querySelectorAll(".flag").forEach(flag => {
+  flag.addEventListener("click", () => {
+    currentLang = flag.dataset.lang;
 
+    // Atualiza textos da interface futuramente, se quiser
+    // Por enquanto apenas troca o wordlist do modo fácil.
+  });
+});
   /* ---------- Helpers idioma ---------- */
   function setLanguage(l){
     lang = l;
@@ -315,6 +352,7 @@ document.addEventListener('DOMContentLoaded', () => {
     toggleVisibility.textContent = t.show;
     document.getElementById('strengthLabel').textContent = t.strength;
   }
+  
   // initialize language UI
   setLanguage(lang);
 
@@ -408,53 +446,39 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function sanitizeWord(w){ return w.replace(/[^A-Za-z0-9àáâãäåçèéêëìíîïñòóôõöùúûüýÿÀÁÂÃÄÅÇÈÉÊËÌÍÎÏÑÒÓÔÕÖÙÚÛÜÝ]/g,''); }
 
-  function generateEasyPassword(){
-    let pool = getWordlistByLang().filter(w => !blacklist.includes(w));
-    if (!pool.length) pool = ['word','safe','blue','sun']; // fallback
-    let count = Number(wordCountInput.value) || 3;
-    count = Math.max(2, Math.min(4, count));
-    const chosen = [];
-    // pick without immediate repeat
-    for (let i=0;i<count;i++){
-      const idx = secureRandomInt(pool.length);
-      chosen.push(sanitizeWord(pool[idx]));
-    }
+  function generateEasyPassword() {
+  const words = WORDLISTS[currentLang];
+  const count = parseInt(wordCount.value, 10);
+  const selected = [];
 
-    // apply separator
-    let sep = separatorSelect.value;
-    let base = '';
-    if (sep === 'hyphen') base = chosen.join('-');
-    else if (sep === 'nothing') base = chosen.join('');
-    else if (sep === 'camelCase'){
-      base = chosen.map((w,i)=> i===0 ? w.toLowerCase() : w.charAt(0).toUpperCase() + w.slice(1).toLowerCase()).join('');
-    } else base = chosen.join('-');
-
-    // append number/symbol if requested
-    let result = base;
-    if (includeNumber.checked){
-      // 1 or 2 digits; use secureRandomInt
-      const num = secureRandomInt(90) + 10; // 10..99
-      result += String(num);
-    }
-    if (includeSymbol.checked){
-      const symbols = "!@#$%&*?";
-      result += symbols[secureRandomInt(symbols.length)];
-    }
-
-    // ensure minimal length (if user requested a larger length than result)
-    const requestedLen = Number(lengthInput.value) || result.length;
-    if (result.length < requestedLen){
-      // try to pad with digits
-      while (result.length < requestedLen && result.length < 128){
-        result += String(secureRandomInt(10));
-      }
-    } else if (result.length > 128){
-      // truncate if exceeds 128
-      result = result.slice(0,128);
-    }
-
-    return result;
+  for (let i = 0; i < count; i++) {
+    const idx = crypto.getRandomValues(new Uint32Array(1))[0] % words.length;
+    selected.push(words[idx]);
   }
+
+  let separator = separatorSelect.value;
+
+  let result = "";
+  if (separator === "hyphen") {
+    result = selected.join("-");
+  } else if (separator === "nothing") {
+    result = selected.join("");
+  } else if (separator === "camelCase") {
+    result = selected
+      .map((w, i) => i === 0 ? w : w[0].toUpperCase() + w.slice(1))
+      .join("");
+  }
+
+  if (includeNumber.checked) {
+    result += Math.floor(Math.random() * 99);
+  }
+  if (includeSymbol.checked) {
+    const symbols = "!@#$%&*?";
+    result += symbols[Math.floor(Math.random() * symbols.length)];
+  }
+
+  return result;
+}
 
   /* ---------- Evaluate strength (simple heuristic) ---------- */
   function evaluateStrength(pw){
@@ -606,3 +630,4 @@ document.addEventListener('DOMContentLoaded', () => {
 </script>
 </body>
 </html>
+
