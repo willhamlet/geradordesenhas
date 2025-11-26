@@ -239,11 +239,10 @@ legend{font-weight:700;padding:0 6px}
    =========================== */
 document.addEventListener('DOMContentLoaded', () => {
   /* ---------- Wordlists (exemplo curto; pode ampliar) ---------- */
-  const wordlists = {
-  const wordlist_pt = ["casa","carro","sol","lua","mar","rio","flor","arvore","montanha","estrela","cachorro","gato","livro","caneta","mesa","cadeira","porta","janela","ceu","terra","fogo","agua","vento","chuva","neve","verao","inverno","primavera","outono","amigo","familia","amor","felicidade"];
-  const wordlist_en = ["house","car","sun","moon","sea","river","flower","tree","mountain","star","dog","cat","book","pen","table","chair","door","window","sky","earth","fire","water","wind","rain","snow","summer","winter","spring","autumn","friend","family","love","happiness"];
-  const wordlist_es = ["casa","coche","sol","luna","mar","rio","flor","arbol","montana","estrella","perro","gato","libro","pluma","mesa","silla","puerta","ventana","cielo","tierra","fuego","agua","viento","lluvia","nieve","verano","invierno","primavera","otonio","amigo","familia","amor","felicidad"];
-  const blacklist = ["palavraofensiva1","palavraofensiva2"];
+  const WORDLIST = {
+        pt = ["casa","carro","sol","lua","mar","rio","flor","arvore","montanha","estrela","cachorro","gato","livro","caneta","mesa","cadeira","porta","janela","ceu","terra","fogo","agua","vento","chuva","neve","verao","inverno","primavera","outono","amigo","familia","amor","felicidade"];
+        en = ["house","car","sun","moon","sea","river","flower","tree","mountain","star","dog","cat","book","pen","table","chair","door","window","sky","earth","fire","water","wind","rain","snow","summer","winter","spring","autumn","friend","family","love","happiness"];
+        es = ["casa","coche","sol","luna","mar","rio","flor","arbol","montana","estrella","perro","gato","libro","pluma","mesa","silla","puerta","ventana","cielo","tierra","fuego","agua","viento","lluvia","nieve","verano","invierno","primavera","otonio","amigo","familia","amor","felicidad"];
     };
   let currentLang = "pt";
   /* ---------- Traduções simples ---------- */
@@ -630,4 +629,5 @@ document.querySelectorAll(".flag").forEach(flag => {
 </script>
 </body>
 </html>
+
 
