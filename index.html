@@ -1,0 +1,608 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Gerador de Senhas Seguras Online – Crie Senhas Fortes Instantaneamente</title>
+<meta name="description" content="Gere senhas fortes e seguras online com letras, números e símbolos. Ferramenta rápida com opções avançadas, botão de copiar e totalmente gratuita.">
+<meta name="keywords" content="senha forte, gerador de senha, senha segura, criar senha, senha aleatória, password generator, senha complexa">
+<meta name="robots" content="index, follow">
+<meta property="og:title" content="Gerador de Senhas Seguras Online">
+<meta property="og:description" content="Crie senhas fortes com letras, números e símbolos. Fácil, rápido e gratuito.">
+<meta property="og:type" content="website">
+<meta property="og:image" content="URL_DA_IMAGEM_AQUI">
+<meta property="og:url" content="URL_DO_SITE_AQUI">
+
+<style>
+/* ---------- Base visual (clean & responsive) ---------- */
+:root{
+  --bg:#f4f7fb; --card:#ffffff; --accent:#2563eb; --muted:#6b7280;
+  --success:#16a34a; --warn:#f59e0b; --danger:#dc2626;
+}
+*{box-sizing:border-box}
+body{
+  font-family:Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+  margin:0; min-height:100vh; background:var(--bg); color:#0f172a;
+  display:flex; align-items:center; justify-content:center; padding:24px;
+}
+.wrapper{width:100%;max-width:920px}
+#ads-top,#ads-bottom{width:100%;max-width:100%;min-height:90px;margin:10px auto;border-radius:8px;border:1px dashed #d1d5db;background:#fff;padding:12px;color:#374151;text-align:center}
+/* Card */
+.card{background:var(--card); border-radius:12px; box-shadow: 0 8px 30px rgba(2,6,23,0.06); padding:20px; margin: 12px 0;}
+.header{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.intro{max-width:680px}
+h1{font-size:1.25rem;margin:0 0 6px}
+p.lead{margin:0;color:var(--muted);font-size:0.95rem}
+
+/* flags */
+.flags{display:flex;gap:10px;align-items:center}
+.flag{width:36px;height:24px;border-radius:6px;border:1px solid #e6eef8;cursor:pointer;object-fit:cover;box-shadow:0 2px 6px rgba(16,24,40,0.04);transition:transform .12s}
+.flag:hover{transform:translateY(-3px)}
+
+/* Form grid */
+.grid{display:grid;grid-template-columns:1fr 320px;gap:18px;margin-top:16px}
+@media(max-width:880px){.grid{grid-template-columns:1fr}}
+label{display:block;font-weight:600;margin-bottom:6px;font-size:0.9rem}
+.input, select, input[type="number"]{width:100%;padding:10px;border-radius:8px;border:1px solid #e6eef8;background:#fbfdff}
+small.muted{color:var(--muted);display:block;margin-top:6px;font-size:0.82rem}
+
+/* checkboxes and fieldsets */
+fieldset{border:1px solid #eef2ff;border-radius:10px;padding:12px;margin-bottom:10px}
+legend{font-weight:700;padding:0 6px}
+
+/* password output area */
+.outputBox{display:flex;gap:10px;align-items:center}
+#password{flex:1;padding:10px;border-radius:8px;border:1px solid #e6eef8;background:#fbfdff;font-family:monospace}
+.btn{background:var(--accent);color:#fff;border:none;padding:10px 12px;border-radius:8px;cursor:pointer;font-weight:600}
+.btn:disabled{opacity:.6;cursor:not-allowed}
+.ghost{background:#fff;border:1px solid #e6eef8;color:#0f172a}
+
+/* strength */
+.strengthArea{margin-top:10px}
+.strength-bar{width:100%;height:10px;background:#eef2ff;border-radius:999px;overflow:hidden}
+.strength-fill{height:100%;width:0%;transition:width .28s;background:var(--danger)}
+
+/* modal */
+.modal{display:none;position:fixed;inset:0;background:rgba(2,6,23,0.45);display:flex;align-items:center;justify-content:center;padding:20px;z-index:9999}
+.modalContent{width:100%;max-width:540px;background:#fff;padding:18px;border-radius:12px;position:relative}
+.modalClose{position:absolute;right:12px;top:10px;background:#fff;border-radius:999px;padding:6px;border:1px solid #eee;cursor:pointer}
+
+/* small helper */
+.row{display:flex;gap:10px;align-items:center}
+.stack{display:flex;flex-direction:column;gap:8px}
+.note{font-size:0.85rem;color:var(--muted)}
+.alert{background:#fffbeb;border:1px solid #fef3c7;padding:8px;border-radius:8px;color:#92400e}
+
+/* responsive */
+@media(max-width:520px){
+  .flags{justify-content:center}
+  .header{flex-direction:column;align-items:flex-start}
+}
+</style>
+</head>
+<body>
+<div class="wrapper">
+  <!-- GOOGLE ADSENSE: Insira aqui o código do bloco de anúncio (AD TOP) -->
+  <div id="ads-top">
+    <!-- Exemplo de onde colocar AdSense (substitua SEU_CLIENT_ID e SEU_SLOT):
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=SEU_CLIENT_ID" crossorigin="anonymous"></script>
+    <ins class="adsbygoogle" style="display:block" data-ad-client="SEU_CLIENT_ID" data-ad-slot="SEU_SLOT"></ins>
+    <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+    -->
+    Espaço para anúncio (top)
+  </div>
+
+  <div class="card">
+    <div class="header">
+      <div class="intro">
+        <h1 id="intro-title">Gerador de Senhas Seguras Online</h1>
+        <p class="lead" id="intro-text">Gere senhas fortes e seguras em segundos — personalizado e responsivo para celular.</p>
+      </div>
+      <div class="flags" role="list" aria-label="Seleção de idioma">
+        <img src="https://flagcdn.com/w80/br.png" alt="Português" class="flag" id="lang-pt" data-lang="pt">
+        <img src="https://flagcdn.com/w80/us.png" alt="English" class="flag" id="lang-en" data-lang="en">
+        <img src="https://flagcdn.com/w80/es.png" alt="Español" class="flag" id="lang-es" data-lang="es">
+      </div>
+    </div>
+
+    <form id="passwordForm" class="grid" onsubmit="return false;">
+      <div>
+        <fieldset>
+          <legend>Modo</legend>
+          <div class="row">
+            <label><input type="radio" name="mode" value="complex" checked> <span id="label-complex">Senha complexa</span></label>
+            <label><input type="radio" name="mode" value="easy"> <span id="label-easy">Senha fácil de lembrar</span></label>
+          </div>
+        </fieldset>
+
+        <div id="easyOptions" style="display:none">
+          <label id="wordCountLabel">Quantidade de palavras:</label>
+          <input class="input" type="number" id="wordCount" min="2" max="4" value="3">
+          <small class="muted">Escolha 2–4 palavras para criar senhas memorizáveis.</small>
+
+          <label id="separatorLabel" style="margin-top:8px">Separador:</label>
+          <select id="separator" class="input">
+            <option value="hyphen">- (hífen)</option>
+            <option value="nothing">Nada</option>
+            <option value="camelCase">CamelCase</option>
+          </select>
+
+          <div style="margin-top:8px">
+            <label><input type="checkbox" id="includeNumber"> <span id="includeNumberText">Incluir número</span></label><br>
+            <label><input type="checkbox" id="includeSymbol"> <span id="includeSymbolText">Incluir símbolo</span></label>
+          </div>
+
+          <div class="alert" style="margin-top:10px" id="easyNotice">Modo mais memorável — menor entropia. Use para conveniência, não para contas críticas.</div>
+        </div>
+
+        <label id="lengthLabel" style="margin-top:12px">Número de caracteres (4-128):</label>
+        <div class="row">
+          <input type="number" id="length" min="4" max="128" value="12" style="width:110px">
+          <input type="range" id="lengthSlider" min="4" max="128" value="12" style="flex:1">
+        </div>
+        <small class="muted" id="charCount">12 caracteres</small>
+        <div id="lengthError" class="note" aria-live="polite" style="height:18px"></div>
+
+        <fieldset style="margin-top:12px" id="complexFieldset">
+          <legend id="charTypesLegend">Tipos de caracteres</legend>
+          <label><input type="checkbox" id="uppercase" checked> Letras maiúsculas (A-Z)</label><br>
+          <label><input type="checkbox" id="lowercase" checked> Letras minúsculas (a-z)</label><br>
+          <label><input type="checkbox" id="numbers" checked> Números (0-9)</label><br>
+          <label><input type="checkbox" id="symbols" checked> Símbolos (ex: !@#$)</label>
+        </fieldset>
+
+        <div style="margin-top:10px">
+          <button class="btn" id="generateBtn" type="button">Gerar Senha</button>
+          <span style="margin-left:8px" id="errorMsg" aria-live="polite"></span>
+        </div>
+      </div>
+
+      <div>
+        <div class="card" style="padding:14px">
+          <label id="passwordLabel">Senha gerada:</label>
+          <div class="outputBox" style="margin-top:8px">
+            <input id="password" readonly type="password" aria-label="Senha gerada" />
+            <button class="ghost" id="toggleVisibility" type="button">Mostrar</button>
+          </div>
+
+          <div style="margin-top:10px" class="row">
+            <button class="btn" id="copyBtn" type="button">Copiar</button>
+            <button class="ghost" id="regenBtn" type="button">Gerar Novamente</button>
+          </div>
+
+          <div class="strengthArea" style="margin-top:12px">
+            <div style="display:flex;justify-content:space-between;align-items:center">
+              <div><strong id="strengthLabel">Força:</strong> <span id="strengthText">—</span></div>
+            </div>
+            <div class="strength-bar" style="margin-top:8px">
+              <div id="strengthFill" class="strength-fill" style="width:0%"></div>
+            </div>
+            <small class="muted" style="display:block;margin-top:8px">Dica: aumente o comprimento e ative mais tipos de caracteres para mais segurança.</small>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+
+  <!-- GOOGLE ADSENSE: Insira aqui o código do bloco de anúncio (AD BOTTOM) -->
+  <div id="ads-bottom">Espaço para anúncio (bottom)</div>
+
+  <!-- Modal for forced ad (a cada 5 gerações) -->
+  <div id="adModal" class="modal" aria-hidden="true">
+    <div class="modalContent" role="dialog" aria-modal="true">
+      <button class="modalClose" id="modalClose" aria-label="Fechar anúncio">✕</button>
+      <!-- GOOGLE ADSENSE: Insira aqui o anúncio obrigatório que aparece a cada 5 gerações -->
+      <div id="forced-ad" style="min-height:180px;display:flex;align-items:center;justify-content:center;border-radius:8px;border:1px dashed #e6eef8">
+        Área de anúncio obrigatório (feche para continuar)
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ===========================
+   Script completo e robusto
+   - executa dentro de DOMContentLoaded
+   - usa crypto.getRandomValues() para números seguros
+   - modo easy corrigido e integrado
+   - sincronização range/number
+   - validações
+   =========================== */
+document.addEventListener('DOMContentLoaded', () => {
+
+  /* ---------- Wordlists (exemplo curto; pode ampliar) ---------- */
+  const wordlist_pt = ["casa","carro","sol","lua","mar","rio","flor","arvore","montanha","estrela","cachorro","gato","livro","caneta","mesa","cadeira","porta","janela","ceu","terra","fogo","agua","vento","chuva","neve","verao","inverno","primavera","outono","amigo","familia","amor","felicidade"];
+  const wordlist_en = ["house","car","sun","moon","sea","river","flower","tree","mountain","star","dog","cat","book","pen","table","chair","door","window","sky","earth","fire","water","wind","rain","snow","summer","winter","spring","autumn","friend","family","love","happiness"];
+  const wordlist_es = ["casa","coche","sol","luna","mar","rio","flor","arbol","montana","estrella","perro","gato","libro","pluma","mesa","silla","puerta","ventana","cielo","tierra","fuego","agua","viento","lluvia","nieve","verano","invierno","primavera","otonio","amigo","familia","amor","felicidad"];
+  const blacklist = ["palavraofensiva1","palavraofensiva2"];
+
+  /* ---------- Traduções simples ---------- */
+  const translations = {
+    pt: {
+      introTitle:"Gerador de Senhas Seguras Online",
+      introText:"Gere senhas fortes e seguras em segundos — personalizado e responsivo.",
+      complex:"Senha complexa", easy:"Senha fácil de lembrar",
+      wordCount:"Quantidade de palavras:", separator:"Separador:",
+      includeNumber:"Incluir número", includeSymbol:"Incluir símbolo",
+      length:"Número de caracteres (4-128):", generated:"Senha gerada:", copy:"Copiar",
+      show:"Mostrar", hide:"Ocultar", strength:"Força:"
+    },
+    en: {
+      introTitle:"Secure Password Generator",
+      introText:"Create strong, secure passwords in seconds — customizable and responsive.",
+      complex:"Complex password", easy:"Easy-to-remember password",
+      wordCount:"Number of words:", separator:"Separator:",
+      includeNumber:"Include number", includeSymbol:"Include symbol",
+      length:"Number of characters (4-128):", generated:"Generated password:", copy:"Copy",
+      show:"Show", hide:"Hide", strength:"Strength:"
+    },
+    es: {
+      introTitle:"Generador de Contraseñas Seguras",
+      introText:"Crea contraseñas fuertes y seguras en segundos — personalizable y responsive.",
+      complex:"Contraseña compleja", easy:"Contraseña fácil de recordar",
+      wordCount:"Cantidad de palabras:", separator:"Separador:",
+      includeNumber:"Incluir número", includeSymbol:"Incluir símbolo",
+      length:"Número de caracteres (4-128):", generated:"Contraseña generada:", copy:"Copiar",
+      show:"Mostrar", hide:"Ocultar", strength:"Fuerza:"
+    }
+  };
+
+  /* ---------- Elementos ---------- */
+  const flags = document.querySelectorAll('.flag');
+  const labelComplex = document.getElementById('label-complex');
+  const labelEasy = document.getElementById('label-easy');
+  const introTitle = document.getElementById('intro-title');
+  const introText = document.getElementById('intro-text');
+  const wordCountInput = document.getElementById('wordCount');
+  const separatorSelect = document.getElementById('separator');
+  const includeNumber = document.getElementById('includeNumber');
+  const includeSymbol = document.getElementById('includeSymbol');
+  const easyOptions = document.getElementById('easyOptions');
+
+  const lengthInput = document.getElementById('length');
+  const lengthSlider = document.getElementById('lengthSlider');
+  const charCount = document.getElementById('charCount');
+  const lengthError = document.getElementById('lengthError');
+  const errorMsg = document.getElementById('errorMsg');
+
+  const generateBtn = document.getElementById('generateBtn');
+  const regenBtn = document.getElementById('regenBtn');
+  const copyBtn = document.getElementById('copyBtn');
+  const toggleVisibility = document.getElementById('toggleVisibility');
+  const passwordField = document.getElementById('password');
+
+  const uppercaseCB = document.getElementById('uppercase');
+  const lowercaseCB = document.getElementById('lowercase');
+  const numbersCB = document.getElementById('numbers');
+  const symbolsCB = document.getElementById('symbols');
+
+  const strengthText = document.getElementById('strengthText');
+  const strengthFill = document.getElementById('strengthFill');
+
+  const adModal = document.getElementById('adModal');
+  const modalClose = document.getElementById('modalClose') || document.getElementById('modalClose'); // fallback
+
+  /* ---------- Estado ---------- */
+  let lang = localStorage.getItem('pw_lang') || 'pt';
+  let generateCounter = Number(localStorage.getItem('pw_genCounter') || 0);
+
+  /* ---------- Util: secure random int [0,n) ---------- */
+  function secureRandomInt(n){
+    if (window.crypto && window.crypto.getRandomValues){
+      const uint32 = new Uint32Array(1);
+      window.crypto.getRandomValues(uint32);
+      return uint32[0] % n;
+    }
+    return Math.floor(Math.random() * n);
+  }
+
+  /* ---------- Helpers idioma ---------- */
+  function setLanguage(l){
+    lang = l;
+    localStorage.setItem('pw_lang', l);
+    const t = translations[l] || translations.pt;
+    introTitle.textContent = t.introTitle;
+    introText.textContent = t.introText;
+    labelComplex.textContent = t.complex;
+    labelEasy.textContent = t.easy;
+    document.getElementById('wordCountLabel').textContent = t.wordCount;
+    document.getElementById('separatorLabel').textContent = t.separator;
+    document.getElementById('includeNumberText').textContent = t.includeNumber;
+    document.getElementById('includeSymbolText').textContent = t.includeSymbol;
+    document.getElementById('lengthLabel').textContent = t.length;
+    document.getElementById('passwordLabel').textContent = t.generated;
+    copyBtn.textContent = t.copy;
+    toggleVisibility.textContent = t.show;
+    document.getElementById('strengthLabel').textContent = t.strength;
+  }
+  // initialize language UI
+  setLanguage(lang);
+
+  flags.forEach(f => f.addEventListener('click', ()=> setLanguage(f.dataset.lang)));
+
+  /* ---------- Sync number + range ---------- */
+  function updateCharCount(v){
+    charCount.textContent = `${v} caracteres`;
+  }
+  lengthInput.addEventListener('input', e=>{
+    let v = Number(e.target.value);
+    if (isNaN(v)) v = 12;
+    if (v < 4) v = 4;
+    if (v > 128) v = 128;
+    lengthInput.value = v;
+    lengthSlider.value = v;
+    updateCharCount(v);
+    lengthError.textContent = '';
+  });
+  lengthSlider.addEventListener('input', e=>{
+    const v = Number(e.target.value);
+    lengthInput.value = v;
+    updateCharCount(v);
+    lengthError.textContent = '';
+  });
+
+  /* ---------- Toggle easy/complex ---------- */
+  const modeRadios = document.querySelectorAll("input[name='mode']");
+  function refreshModeUI(){
+    const mode = document.querySelector("input[name='mode']:checked").value;
+    easyOptions.style.display = (mode === 'easy') ? 'block' : 'none';
+    // hide complex options when easy selected
+    document.getElementById('complexFieldset').style.display = (mode === 'easy') ? 'none' : 'block';
+  }
+  modeRadios.forEach(r=> r.addEventListener('change', refreshModeUI));
+  refreshModeUI();
+
+  /* ---------- Complex password generator (guarantee types) ---------- */
+  function generateComplexPassword(){
+    const length = Number(lengthInput.value);
+    if (length < 4 || length > 128){
+      lengthError.textContent = (length<4) ? 'Mínimo 4 caracteres.' : 'Máximo 128 caracteres.';
+      return '';
+    }
+    const useUpper = uppercaseCB.checked;
+    const useLower = lowercaseCB.checked;
+    const useNumbers = numbersCB.checked;
+    const useSymbols = symbolsCB.checked;
+
+    let pools = [];
+    if (useUpper) pools.push("ABCDEFGHIJKLMNOPQRSTUVWXYZ");
+    if (useLower) pools.push("abcdefghijklmnopqrstuvwxyz");
+    if (useNumbers) pools.push("0123456789");
+    if (useSymbols) pools.push("!@#$%^&*()_+-=[]{};:'\",.<>/?\\|`~");
+
+    if (pools.length === 0){
+      errorMsg.textContent = 'Selecione pelo menos um tipo de caractere.';
+      return '';
+    } else errorMsg.textContent = '';
+
+    // Build password ensuring at least one from each selected pool
+    let passwordChars = [];
+    // ensure one char from each pool first
+    pools.forEach(pool => {
+      const idx = secureRandomInt(pool.length);
+      passwordChars.push(pool[idx]);
+    });
+
+    // remaining chars
+    const allChars = pools.join('');
+    while (passwordChars.length < length){
+      const idx = secureRandomInt(allChars.length);
+      passwordChars.push(allChars[idx]);
+    }
+
+    // shuffle securely
+    for (let i = passwordChars.length -1; i>0; i--){
+      const j = secureRandomInt(i+1);
+      [passwordChars[i], passwordChars[j]] = [passwordChars[j], passwordChars[i]];
+    }
+
+    return passwordChars.join('');
+  }
+
+  /* ---------- Easy (memorable) password generator (fixed) ---------- */
+  function getWordlistByLang(){
+    if (lang === 'en') return wordlist_en.slice();
+    if (lang === 'es') return wordlist_es.slice();
+    return wordlist_pt.slice();
+  }
+
+  function sanitizeWord(w){ return w.replace(/[^A-Za-z0-9àáâãäåçèéêëìíîïñòóôõöùúûüýÿÀÁÂÃÄÅÇÈÉÊËÌÍÎÏÑÒÓÔÕÖÙÚÛÜÝ]/g,''); }
+
+  function generateEasyPassword(){
+    let pool = getWordlistByLang().filter(w => !blacklist.includes(w));
+    if (!pool.length) pool = ['word','safe','blue','sun']; // fallback
+    let count = Number(wordCountInput.value) || 3;
+    count = Math.max(2, Math.min(4, count));
+    const chosen = [];
+    // pick without immediate repeat
+    for (let i=0;i<count;i++){
+      const idx = secureRandomInt(pool.length);
+      chosen.push(sanitizeWord(pool[idx]));
+    }
+
+    // apply separator
+    let sep = separatorSelect.value;
+    let base = '';
+    if (sep === 'hyphen') base = chosen.join('-');
+    else if (sep === 'nothing') base = chosen.join('');
+    else if (sep === 'camelCase'){
+      base = chosen.map((w,i)=> i===0 ? w.toLowerCase() : w.charAt(0).toUpperCase() + w.slice(1).toLowerCase()).join('');
+    } else base = chosen.join('-');
+
+    // append number/symbol if requested
+    let result = base;
+    if (includeNumber.checked){
+      // 1 or 2 digits; use secureRandomInt
+      const num = secureRandomInt(90) + 10; // 10..99
+      result += String(num);
+    }
+    if (includeSymbol.checked){
+      const symbols = "!@#$%&*?";
+      result += symbols[secureRandomInt(symbols.length)];
+    }
+
+    // ensure minimal length (if user requested a larger length than result)
+    const requestedLen = Number(lengthInput.value) || result.length;
+    if (result.length < requestedLen){
+      // try to pad with digits
+      while (result.length < requestedLen && result.length < 128){
+        result += String(secureRandomInt(10));
+      }
+    } else if (result.length > 128){
+      // truncate if exceeds 128
+      result = result.slice(0,128);
+    }
+
+    return result;
+  }
+
+  /* ---------- Evaluate strength (simple heuristic) ---------- */
+  function evaluateStrength(pw){
+    if (!pw) {
+      strengthText.textContent = '—';
+      strengthFill.style.width = '0%';
+      return;
+    }
+    let score = 0;
+    if (pw.length >= 8) score++;
+    if (pw.length >= 12) score++;
+    if (/[A-Z]/.test(pw)) score++;
+    if (/[0-9]/.test(pw)) score++;
+    if (/[^A-Za-z0-9]/.test(pw)) score++;
+
+    if (score <= 2){
+      strengthText.textContent = (lang==='pt')?'Fraca':(lang==='es'?'Débil':'Weak');
+      strengthFill.style.width = '28%';
+      strengthFill.style.background = getComputedStyle(document.documentElement).getPropertyValue('--danger') || '#dc2626';
+    } else if (score <= 4){
+      strengthText.textContent = (lang==='pt')?'Média':(lang==='es'?'Media':'Medium');
+      strengthFill.style.width = '68%';
+      strengthFill.style.background = getComputedStyle(document.documentElement).getPropertyValue('--warn') || '#f59e0b';
+    } else {
+      strengthText.textContent = (lang==='pt')?'Forte':(lang==='es'?'Fuerte':'Strong');
+      strengthFill.style.width = '100%';
+      strengthFill.style.background = getComputedStyle(document.documentElement).getPropertyValue('--success') || '#16a34a';
+    }
+  }
+
+  /* ---------- Generate flow ---------- */
+  function doGenerate(){
+    // validations
+    const lengthVal = Number(lengthInput.value);
+    if (isNaN(lengthVal) || lengthVal < 4 || lengthVal > 128){
+      lengthError.textContent = 'Informe um valor entre 4 e 128.';
+      return;
+    }
+    lengthError.textContent = '';
+
+    const mode = document.querySelector("input[name='mode']:checked").value;
+    let password = '';
+    if (mode === 'easy') {
+      password = generateEasyPassword();
+    } else {
+      password = generateComplexPassword();
+    }
+
+    if (!password){
+      // error message already set by generator
+      return;
+    }
+
+    // write to field and show strength
+    passwordField.type = 'password'; // keep default hidden
+    passwordField.value = password;
+    evaluateStrength(password);
+
+    // increment counter and maybe show modal ad
+    generateCounter++;
+    localStorage.setItem('pw_genCounter', generateCounter);
+    if (generateCounter % 5 === 0){
+      // show modal (forced ad)
+      adModal.style.display = 'flex';
+      adModal.setAttribute('aria-hidden','false');
+    }
+  }
+
+  /* ---------- Event bindings ---------- */
+  generateBtn.addEventListener('click', doGenerate);
+  regenBtn.addEventListener('click', doGenerate);
+
+  copyBtn.addEventListener('click', async ()=>{
+    try {
+      await navigator.clipboard.writeText(passwordField.value || '');
+      copyBtn.textContent = (lang==='pt') ? 'Copiado!' : (lang==='es' ? '¡Copiado!' : 'Copied!');
+      setTimeout(()=> copyBtn.textContent = translations[lang].copy, 1500);
+    } catch(e){
+      // fallback: select + execCommand
+      passwordField.select();
+      try { document.execCommand('copy'); } catch(e){}
+    }
+  });
+
+  toggleVisibility.addEventListener('click', ()=>{
+    if (passwordField.type === 'password'){
+      passwordField.type = 'text';
+      toggleVisibility.textContent = translations[lang].hide;
+    } else {
+      passwordField.type = 'password';
+      toggleVisibility.textContent = translations[lang].show;
+    }
+  });
+
+  // close modal
+  adModal.addEventListener('click', (e)=> {
+    if (e.target === adModal || e.target.id === 'modalClose') {
+      adModal.style.display = 'none';
+      adModal.setAttribute('aria-hidden','true');
+    }
+  });
+  // also assign close button if present
+  const modalCloseBtn = document.getElementById('modalClose') || document.querySelector('.modalClose') || document.querySelector('.modalClose');
+  if (modalCloseBtn) modalCloseBtn.addEventListener('click', ()=> { adModal.style.display='none'; adModal.setAttribute('aria-hidden','true'); });
+
+  /* ---------- Init UI values ---------- */
+  updateCharCount(Number(lengthInput.value));
+  function updateCharCount(n){ charCount.textContent = `${n} caracteres`; }
+  // restore language button text
+  setLanguageUI();
+  function setLanguageUI(){ setLanguageUI = ()=>{} } // noop to mark usage
+
+  // small helper: ensure radios reflect and UI visible
+  refreshModeUI = ()=>{ // recreate local version
+    const mode = document.querySelector("input[name='mode']:checked").value;
+    easyOptions.style.display = (mode==='easy') ? 'block' : 'none';
+    document.getElementById('complexFieldset').style.display = (mode==='easy') ? 'none' : 'block';
+  };
+  refreshModeUI();
+
+  /* expose doGenerate for debugging in console if needed */
+  window.doGenerate = doGenerate;
+
+  /* ---------- ensure full i18n texts applied at start ---------- */
+  setLanguage(lang);
+  function setLanguage(l){
+    localStorage.setItem('pw_lang', l);
+    introTitle.textContent = translations[l].introTitle;
+    introText.textContent = translations[l].introText;
+    labelComplex.textContent = translations[l].complex;
+    labelEasy.textContent = translations[l].easy;
+    document.getElementById('wordCountLabel').textContent = translations[l].wordCount;
+    document.getElementById('separatorLabel').textContent = translations[l].separator;
+    document.getElementById('includeNumberText').textContent = translations[l].includeNumber;
+    document.getElementById('includeSymbolText').textContent = translations[l].includeSymbol;
+    document.getElementById('lengthLabel').textContent = translations[l].length;
+    document.getElementById('passwordLabel').textContent = translations[l].generated;
+    copyBtn.textContent = translations[l].copy;
+    toggleVisibility.textContent = translations[l].show;
+    document.getElementById('strengthLabel').textContent = translations[l].strength;
+  }
+
+  // flags handlers
+  document.getElementById('lang-pt').addEventListener('click', ()=> setLanguage('pt'));
+  document.getElementById('lang-en').addEventListener('click', ()=> setLanguage('en'));
+  document.getElementById('lang-es').addEventListener('click', ()=> setLanguage('es'));
+
+}); // DOMContentLoaded end
+</script>
+</body>
+</html>
